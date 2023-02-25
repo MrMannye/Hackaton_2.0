@@ -8,14 +8,16 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
+
 function Login() {
     const [contraseña, setContraseña] = useState(false);
+    
     const handleClickShowPassword = () => {
         setContraseña(!contraseña);
     }
 
     const signIn = () => {
-
+        
     }
 
     return (
@@ -24,7 +26,7 @@ function Login() {
             <div className=' flex flex-col items-center h-screen'>
                 <div className='flex flex-col items-center mb-8 bg-transparent'>
                     <FormControl sx={{ m: 1, width: '40ch' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-correo">Correo</InputLabel>
+                        <InputLabel htmlFor="outlined-adornment-correo">Full Name</InputLabel>
                         <OutlinedInput
                             id="outlined-adornment-correo"
                             className='text-black'

@@ -28,7 +28,7 @@ function Mytaks() {
         })}
       </div>
       <div className='absolute right-6 bottom-28'>
-        <Fab className='bg-[#42BEA5]' aria-label="add" size='large'>
+        <Fab className='bg-[#42BEA5]' size='large'>
           <AddIcon className='text-white' />
         </Fab>
       </div>

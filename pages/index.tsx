@@ -3,16 +3,21 @@ import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
+import { useDispatch } from 'react-redux'
+import { saveUser } from '@/features/user/userSlice';
+
 export default function Home() {
 
   const router = useRouter();
+  const dispatch = useDispatch()
   const mirrorWorld = new MirrorWorld({
     apiKey: "mw_EQhbJbLVBaIwuQiXjemZhmIAJGqgFnWRIkI",
     env: ClusterEnvironment.testnet,
   })
   const login = async () => {
-    const user = await mirrorWorld.login();
-    console.log(user);
+    const result = await mirrorWorld.login();
+    console.log(result.user);
+    dispatch(saveUser(result.user));
     router.push("/mytasks")
   }
 
