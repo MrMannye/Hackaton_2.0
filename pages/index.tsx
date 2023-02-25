@@ -1,3 +1,4 @@
+import { MirrorWorld, ClusterEnvironment } from '@mirrorworld/web3.js';
 import Head from 'next/head'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
@@ -5,6 +6,15 @@ import { useRouter } from 'next/router'
 export default function Home() {
 
   const router = useRouter();
+  const mirrorWorld = new MirrorWorld({
+    apiKey: "mw_EQhbJbLVBaIwuQiXjemZhmIAJGqgFnWRIkI",
+    env: ClusterEnvironment.testnet,
+  })
+  const login = async () => {
+    const user = await mirrorWorld.login();
+    console.log(user);
+    router.push("/mytasks")
+  }
 
   return (
     <>
@@ -15,9 +25,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className="flex items-center justify-center flex-col h-screen space-y-10">
-        <Image src={"/logo-dark.svg"} width={140} height={140} alt="Image Main" />
+        <Image src={"/logo-light.svg"} width={140} height={140} alt="Image Main" />
         <div className='flex items-center justify-center flex-col space-y-6'>
-          <button onClick={() => router.push("login")} className='w-[250px] py-2 px-20 bg-[#42BEA5] rounded-lg'>
+          <button onClick={() => login()} className='w-[250px] py-2 px-20 bg-[#42BEA5] rounded-lg'>
             Login
           </button>
           <button onClick={() => router.push("login")} className='w-[250px] py-2 px-20 bg-white rounded-lg'>

@@ -29,14 +29,14 @@ function Login() {
                             id="outlined-adornment-correo"
                             className='text-black'
                             type="text"
-                            endAdornment={
-                                <InputAdornment position="end">
+                            startAdornment={
+                                <InputAdornment position="start">
                                     <IconButton
                                         aria-label="toggle password visibility"
                                         onClick={handleClickShowPassword}
                                         edge="end"
                                     >
-                                        <LockOutlinedIcon />
+                                        <EmailOutlinedIcon />
                                     </IconButton>
                                 </InputAdornment>
                             }
@@ -49,6 +49,17 @@ function Login() {
                             id="outlined-adornment-password"
                             className='text-black'
                             type={contraseña ? 'text' : 'password'}
+                            startAdornment={
+                                <InputAdornment position="start">
+                                    <IconButton
+                                        aria-label="toggle password visibility"
+                                        onClick={handleClickShowPassword}
+                                        edge="end"
+                                    >
+                                        <LockOutlinedIcon/>
+                                    </IconButton>
+                                </InputAdornment>
+                            }
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton
