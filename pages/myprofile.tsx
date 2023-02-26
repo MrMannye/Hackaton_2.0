@@ -83,6 +83,11 @@ function Myprofile() {
                     <Link href={"/editprofile"}>See my rofile</Link>
                     <ArrowForwardIosIcon />
                 </div>
+                <Divider variant="middle" />
+                <div className='flex my-6 items-center justify-between'>
+                    <Link href={"/addFrensAddress"}>Add Fren's Address</Link>
+                    <ArrowForwardIosIcon />
+                </div>
                 <div className='flex mt-6 mb-3 items-center justify-between'>
                     <span>Switch to Dark Mode</span>
                     <FormControlLabel
