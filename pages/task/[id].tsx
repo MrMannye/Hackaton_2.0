@@ -25,13 +25,13 @@ export default function Task() {
     const user_publickey = useSelector((state: RootState) => state?.user.wallet?.sol_address)
 
     useEffect(() => {
-        fetch("http://localhost:8080/tasks/"+user_publickey+"/"+task_name)
+        fetch("https://proactive-node.herokuapp.com/tasks/"+user_publickey+"/"+task_name)
           .then(response => response.json())
           .then(data => setTask(data[0]));
       },[])
     
       const completeTask = () => {
-        axios.post("http://localhost:8080/completeTask",{
+        axios.post("https://proactive-node.herokuapp.com/completeTask",{
             user_publickey: user_publickey,
             task_name: task_name,
         }).then(response => {

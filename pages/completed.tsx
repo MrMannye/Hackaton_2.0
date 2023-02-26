@@ -32,7 +32,7 @@ function Completed() {
   },[])
   
   useEffect(() => {
-    fetch("http://localhost:8080/completedTasks/" + user_publickey)
+    fetch("https://proactive-node.herokuapp.com/completedTasks/" + user_publickey)
       .then(response => response.json())
       .then(data => setTasks(data));
   }, [])
@@ -44,8 +44,7 @@ function Completed() {
         <h2>Completed Tasks</h2>
         {tasks.map((task, index) => {
           return (
-            <Link key={index} href={`/task/${task}`}>
-              <div className="flex items-center justify-between p-4 border mb-3 shadow-xl">
+              <div key={index} className="flex items-center justify-between p-4 border mb-3 shadow-xl">
                 <div className='flex flex-col items-start'>
                   <span className='text-2xl font-bold'>{task.task_name}</span>
                   <span>{task.task_desc}</span>
@@ -54,7 +53,6 @@ function Completed() {
                   <input type="checkbox" className='custom-checkbox custom-control-label' />
                 </div>
               </div>
-            </Link>
           )
         })}
       </div>

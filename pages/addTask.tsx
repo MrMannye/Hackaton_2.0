@@ -25,7 +25,7 @@ function AddTask() {
     const [description, setDescription] = useState("");
 
     const addTask = () => {
-        axios.post("http://localhost:8080/addTask", {
+        axios.post("https://proactive-node.herokuapp.com/addTask", {
             user_publickey: user_publickey,
             task_name: nameActivity,
             task_desc: description,

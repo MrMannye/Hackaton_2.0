@@ -28,7 +28,7 @@ function Mytaks() {
     if (user === undefined) router.push("/");
   }, [])
   useEffect(() => {
-    fetch("http://localhost:8080/tasks/" + user_publickey)
+    fetch("https://proactive-node.herokuapp.com/tasks/" + user_publickey)
       .then(response => response.json())
       .then(data => setTasks(data));
   }, [])
