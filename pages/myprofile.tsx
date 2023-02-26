@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store'
 import { useRouter } from 'next/router';
 import NavBar from '@/components/NavBar';
+import Link from 'next/link';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Divider, FormControlLabel, styled, Switch } from '@mui/material';
@@ -79,12 +80,12 @@ function Myprofile() {
             <div className='p-4 w-full shadow-xl'>
                 <span>Account Information</span>
                 <div className='flex my-6 items-center justify-between'>
-                    <span>Edit Profile</span>
+                    <Link href={"/editprofile"}>Edit Profile</Link>
                     <ArrowForwardIosIcon />
                 </div>
                 <Divider/>
                 <div className='flex my-6 items-center justify-between'>
-                    <span>Changue Password</span>
+                    <Link href={"/changepassword"}>Changue Password</Link>
                     <ArrowForwardIosIcon />
                 </div>
                 <Divider/>
