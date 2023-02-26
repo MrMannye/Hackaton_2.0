@@ -6,6 +6,8 @@ import Link from 'next/link';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { useMirrorWorld } from '@/hooks/useMirrorWorld';
+import { useRouter } from 'next/router';
 
 interface Tasks {
   friend_publickey: string,
@@ -17,22 +19,30 @@ interface Tasks {
 }
 
 
-function completed() {
+function Completed() {
+
+  const { user } = useMirrorWorld()
+  const router = useRouter();
 
   const [tasks, setTasks] = useState<Tasks[]>([])
   const user_publickey = useSelector((state: RootState) => state.user?.wallet?.sol_address);
+  
   useEffect(() => {
-    fetch("http://localhost:8080/completedTasks/"+user_publickey)
+    if (user === undefined) router.push("/");
+  },[])
+  
+  useEffect(() => {
+    fetch("http://localhost:8080/completedTasks/" + user_publickey)
       .then(response => response.json())
       .then(data => setTasks(data));
-  },[])
+  }, [])
 
   return (
     <div className='h-screen relative w-screen'>
       <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#FC7823]'>Completed Tasks</h1>
       <div className='p-3'>
         <h2>Completed Tasks</h2>
-        {tasks.map((task,index) => {
+        {tasks.map((task, index) => {
           return (
             <Link key={index} href={`/task/${task}`}>
               <div className="flex items-center justify-between p-4 border mb-3 shadow-xl">
@@ -48,14 +58,9 @@ function completed() {
           )
         })}
       </div>
-      <div className='absolute right-6 bottom-28'>
-        <Fab className='bg-[#FC7823]' aria-label="add" size='large'>
-          <AddIcon className='text-white' />
-        </Fab>
-      </div>
       <NavBar />
     </div>
   )
 }
 
-export default completed
+export default Completed

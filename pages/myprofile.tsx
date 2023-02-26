@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux';
 import type { RootState } from '../store/store'
 import { useRouter } from 'next/router';
@@ -6,8 +6,7 @@ import NavBar from '@/components/NavBar';
 import Link from 'next/link';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { Divider, FormControlLabel, styled, Switch } from '@mui/material';
-import { ClusterEnvironment, MirrorWorld } from '@mirrorworld/web3.js';
+import { FormControlLabel, styled, Switch } from '@mui/material';
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -60,19 +59,16 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 function Myprofile() {
 
     const user = useSelector((state: RootState) => state?.user);
-    console.log(user)
     const router = useRouter();
-    const mirrorWorld = new MirrorWorld({
-        apiKey: "mw_EQhbJbLVBaIwuQiXjemZhmIAJGqgFnWRIkI",
-        env: ClusterEnvironment.testnet,
-      })
+    
     const logOut = () => {
-        mirrorWorld.logout();
         router.push("/");
     }
-
+    useEffect(() => {
+        console.log(user);
+        if (user.wallet?.sol_address === "") router.push("/");
+    }, [])
     return (
-        
         <div className='flex flex-col items-start w-screen'>
             <div className='p-4 py-5 text-white bg-[#FC7823] w-full'>
                 <h1 className='text-4xl font-bold'>Welcome</h1>

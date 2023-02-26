@@ -1,6 +1,6 @@
 import { Divider, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import { useRouter } from 'next/router';
-import React, {useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -8,10 +8,18 @@ import EditIcon from '@mui/icons-material/Edit';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { useMirrorWorld } from '@/hooks/useMirrorWorld';
 
-function addTask() {
+function AddTask() {
+
+    const { user } = useMirrorWorld()
     const router = useRouter();
-    const user_publickey = useSelector((state: RootState)  => state?.user.wallet?.sol_address);
+
+    useEffect(() => {
+        if (user === undefined) router.push("/");
+    }, [])
+
+    const user_publickey = useSelector((state: RootState) => state?.user.wallet?.sol_address);
 
     const [nameActivity, setNameActivity] = useState("");
     const [description, setDescription] = useState("");
@@ -78,10 +86,10 @@ function addTask() {
             </div>
             <Divider variant="middle" />
             <div className='flex flex-col'>
-                <button onClick={() => addTask()} className='py-4 w-80 shadow-xl self-center bg-[#42BEA5] rounded-lg text-white font-semibold mt-5'>Add Task</button>
+                <button onClick={() => addTask()} className='py-4 w-80 shadow-xl self-center bg-[#FC7823] rounded-lg text-white font-semibold mt-5'>Add Task</button>
             </div>
         </div>
     )
 }
 
-export default addTask
+export default AddTask

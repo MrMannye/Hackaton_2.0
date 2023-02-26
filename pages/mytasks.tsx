@@ -6,6 +6,8 @@ import Link from 'next/link';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
+import { useMirrorWorld } from '@/hooks/useMirrorWorld';
+import {useRouter} from 'next/router';
 
 interface Tasks {
   friend_publickey: string,
@@ -19,11 +21,17 @@ interface Tasks {
 function Mytaks() {
   const [tasks, setTasks] = useState<Tasks[]>([])
   const user_publickey = useSelector((state: RootState) => state.user?.wallet?.sol_address);
+  const { user } = useMirrorWorld();
+  const router = useRouter();
+
   useEffect(() => {
-    fetch("http://localhost:8080/tasks/"+user_publickey)
+    if (user === undefined) router.push("/");
+  }, [])
+  useEffect(() => {
+    fetch("http://localhost:8080/tasks/" + user_publickey)
       .then(response => response.json())
       .then(data => setTasks(data));
-  },[])
+  }, [])
   return (
     <div className='h-screen relative w-screen'>
       <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#FC7823]'>MyTasks</h1>
@@ -46,7 +54,7 @@ function Mytaks() {
         })}
       </div>
       <Link href={"/addTask"} className='absolute right-6 bottom-28'>
-        <Fab className='bg-[#42BEA5]' size='large'>
+        <Fab className='bg-[#FC7823]' size='large'>
           <AddIcon className='text-white' />
         </Fab>
       </Link>

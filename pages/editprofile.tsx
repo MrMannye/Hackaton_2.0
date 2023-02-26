@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { RootState } from '../store/store'
 import { useSelector } from 'react-redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
@@ -14,7 +14,9 @@ function Editprofile() {
 
     const user = useSelector((state: RootState) => state?.user);
     const router = useRouter();
-
+    useEffect(() => {
+        if (user === undefined) router.push("/");
+    }, [])
     return (
         <div className='p-6 shadow-xl'>
             <div className='flex items-center space-x-4 p-4 w-full' >
