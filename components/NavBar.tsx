@@ -13,14 +13,18 @@ function NavBar() {
     
     return (
     <div className='h-[80px] w-[412px] absolute bottom-0 flex items-center justify-around bg-black'>
+       
+        <title>Proactive Week</title>
+        <link rel="icon" href="/favicon.ico" />
+   
         <Link href={"/mytasks"}>
-            <PlaylistAddIcon className={`${router === '/mytasks' ? "text-[#42BEA5]" : "text-white"}`}/>
+            <PlaylistAddIcon className={`${router === '/mytasks' ? "text-[#FC7823]" : "text-white"}`}/>
         </Link>
         <Link href={"/completed"}>
-            <AccessAlarmIcon className={`${router === '/completed' ? "text-[#42BEA5]" : "text-white"}`} />
+            <AccessAlarmIcon className={`${router === '/completed' ? "text-[#FC7823]" : "text-white"}`} />
         </Link>
         <Link href={"/myprofile"}>
-            <PersonOutlineOutlinedIcon className={`${router === '/myprofile' ? "text-[#42BEA5]" : "text-white"}`}/>
+            <PersonOutlineOutlinedIcon className={`${router === '/myprofile' ? "text-[#FC7823]" : "text-white"}`}/>
         </Link>
     </div>
   )

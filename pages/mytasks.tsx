@@ -26,7 +26,7 @@ function Mytaks() {
   },[])
   return (
     <div className='h-screen relative w-screen'>
-      <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#42BEA5]'>MyTasks</h1>
+      <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#FC7823]'>MyTasks</h1>
       <div className='p-3'>
         <h2>Schedule tasks</h2>
         {tasks.map((task, index) => {

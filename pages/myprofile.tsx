@@ -72,23 +72,17 @@ function Myprofile() {
     }
 
     return (
+        
         <div className='flex flex-col items-start w-screen'>
-            <div className='p-4 py-5 text-white bg-[#42BEA5] w-full'>
+            <div className='p-4 py-5 text-white bg-[#FC7823] w-full'>
                 <h1 className='text-4xl font-bold'>Welcome</h1>
                 <span className='text-lg'>{user.username}</span>
             </div>
             <div className='p-4 w-full shadow-xl'>
-                <span>Account Information</span>
                 <div className='flex my-6 items-center justify-between'>
-                    <Link href={"/editprofile"}>Edit Profile</Link>
+                    <Link href={"/editprofile"}>See my rofile</Link>
                     <ArrowForwardIosIcon />
                 </div>
-                <Divider/>
-                <div className='flex my-6 items-center justify-between'>
-                    <Link href={"/changepassword"}>Changue Password</Link>
-                    <ArrowForwardIosIcon />
-                </div>
-                <Divider/>
                 <div className='flex mt-6 mb-3 items-center justify-between'>
                     <span>Switch to Dark Mode</span>
                     <FormControlLabel
