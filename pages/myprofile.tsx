@@ -76,10 +76,9 @@ function Myprofile() {
             </div>
             <div className='p-4 w-full shadow-xl'>
                 <div className='flex my-6 items-center justify-between'>
-                    <Link href={"/editprofile"}>See my rofile</Link>
+                    <Link href={"/editprofile"}>See my profile</Link>
                     <ArrowForwardIosIcon />
                 </div>
-                <Divider variant="middle" />
                 <div className='flex my-6 items-center justify-between'>
                     <Link href={"/addFrensAddress"}>Add Fren's Address</Link>
                     <ArrowForwardIosIcon />

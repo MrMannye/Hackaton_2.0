@@ -42,7 +42,7 @@ function addFrensAddress() {
                 <span className='text-3xl font-bold'>Add Fren's Address</span>
             </div>
             <div className='my-6'>
-                <h1 className='text-lg mb-2'>Account Information</h1>
+                <h1 className='text-lg mb-2'>My Fren's Account Information</h1>
             </div>
             <Divider variant="middle" />
             <div className='flex flex-col'>
@@ -65,7 +65,7 @@ function addFrensAddress() {
                         label="Solana Wallet Address"
                     />
                 </FormControl>
-                <button onClick={save} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Save</button>
+                <button onClick={save} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Update Address</button>
                 <button onClick={transfer} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Transfer</button>
             </div>
 
