@@ -4,6 +4,8 @@ import { Fab } from '@mui/material'
 import Link from 'next/link';
 
 import AddIcon from '@mui/icons-material/Add';
+import { useSelector } from 'react-redux';
+import { RootState } from '@/store/store';
 
 interface Tasks {
   friend_publickey: string,
@@ -16,11 +18,11 @@ interface Tasks {
 
 function Mytaks() {
   const [tasks, setTasks] = useState<Tasks[]>([])
+  const user_publickey = useSelector((state: RootState) => state.user?.wallet?.sol_address);
   useEffect(() => {
-    fetch("http://localhost:8080/tasks/DULTXjP6emJocoEvoM2iZoE2nS6t75F95db6NBo52Sy")
+    fetch("http://localhost:8080/tasks/"+user_publickey)
       .then(response => response.json())
       .then(data => setTasks(data));
-    
   },[])
   return (
     <div className='h-screen relative w-screen'>
@@ -29,7 +31,7 @@ function Mytaks() {
         <h2>Schedule tasks</h2>
         {tasks.map((task, index) => {
           return (
-            <Link key={index} href={`/task/${task}`}>
+            <Link key={index} href={`/task/${task.task_name}`}>
               <div className="flex items-center justify-between p-4 border mb-3 shadow-xl">
                 <div className='flex flex-col items-start'>
                   <span className='text-2xl font-bold'>{task?.task_name}</span>
@@ -43,11 +45,11 @@ function Mytaks() {
           )
         })}
       </div>
-      <div className='absolute right-6 bottom-28'>
+      <Link href={"/addTask"} className='absolute right-6 bottom-28'>
         <Fab className='bg-[#42BEA5]' size='large'>
           <AddIcon className='text-white' />
         </Fab>
-      </div>
+      </Link>
       <NavBar />
     </div>
   )

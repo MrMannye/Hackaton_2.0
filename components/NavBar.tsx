@@ -10,7 +10,7 @@ import Link from 'next/link';
 function NavBar() {
     
     const router = useRouter().pathname;
-    console.log(router === '/mytasks' ? "hola" : "text-white")
+    
     return (
     <div className='h-[80px] w-[412px] absolute bottom-0 flex items-center justify-around bg-black'>
         <Link href={"/mytasks"}>
