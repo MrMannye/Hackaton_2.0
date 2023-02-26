@@ -8,7 +8,7 @@ import AddIcon from '@mui/icons-material/Add';
 function completed() {
   return (
     <div className='h-screen relative w-screen'>
-      <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#42BEA5]'>Completed Tasks</h1>
+      <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#FC7823]'>Completed Tasks</h1>
       <div className='p-3'>
         <h2>Completed Tasks</h2>
         {[1, 2, 3, 4, 5].map(task => {
@@ -28,7 +28,7 @@ function completed() {
         })}
       </div>
       <div className='absolute right-6 bottom-28'>
-        <Fab className='bg-[#42BEA5]' aria-label="add" size='large'>
+        <Fab className='bg-[#FC7823]' aria-label="add" size='large'>
           <AddIcon className='text-white' />
         </Fab>
       </div>
