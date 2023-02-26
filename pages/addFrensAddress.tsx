@@ -8,7 +8,7 @@ import { ClusterEnvironment, IUser, MirrorWorld } from "@mirrorworld/web3.js"
 import  {useRouter}  from 'next/router';
 import { Divider, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
 
-function addFrensAddress() {
+function AddFrensAddress() {
 
     const user = useSelector((state: RootState) => state?.user);
     const router = useRouter();
@@ -74,4 +74,4 @@ function addFrensAddress() {
     )
 }
 
-export default addFrensAddress
+export default AddFrensAddress
