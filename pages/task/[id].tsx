@@ -20,24 +20,8 @@ export default function Task() {
   
     const router = useRouter();
     const task_name = router.query.id;
-    const [task, setTask] = useState<Event>()
-    const user_publickey = useSelector((state: RootState) => state?.user.wallet?.sol_address)
+    const [task, setTask] = useState<Event>({Id: 1, name_evento: "Prueba", organizador: "Miguel Aguilera", descripcion_evento: "Prueba para el funcionamiento de la pagina", fecha_evento: new Date()})
 
-    useEffect(() => {
-        fetch("https://proactiveweek-superbrandon2018.b4a.run/events/" + task_name)
-          .then(response => response.json())
-          .then(data => setTask(data.body[0]));
-      },[])
-    
-      const completeTask = () => {
-        axios.post("https://proactive-node.herokuapp.com/completeTask",{
-            user_publickey: user_publickey,
-            task_name: task_name,
-        }).then(response => {
-            console.log(response.data);
-            router.push("/mytasks")
-        }) 
-      }
 
     return (
     <div className='p-6'>
@@ -53,7 +37,7 @@ export default function Task() {
         <div className='flex flex-col'>
             <h2>{new Date(task?.fecha_evento || new Date()).toLocaleDateString('es-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}</h2>
             <span className='text-2xl mb-2 font-bold'>{task?.organizador?.slice(0,10)}... <span className='text-[#42BEA5]'>{[task_name]}</span></span>
-            <button onClick={() => completeTask()} className='py-4 w-80 shadow-xl self-center bg-[#FC7823] rounded-lg text-white font-semibold mt-5'>Mark As Complete</button>
+            <button className='py-4 w-80 shadow-xl self-center bg-[#FC7823] rounded-lg text-white font-semibold mt-5'>Mark As Complete</button>
         </div>
     </div>
   )
