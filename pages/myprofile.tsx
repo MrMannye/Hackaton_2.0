@@ -1,6 +1,4 @@
-import React, { useEffect } from 'react'
-import { useSelector } from 'react-redux';
-import type { RootState } from '../store/store'
+import React, { useEffect, useMemo } from 'react'
 import { useRouter } from 'next/router';
 import NavBar from '@/components/NavBar';
 import Link from 'next/link';
@@ -9,6 +7,8 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { FormControlLabel, styled, Switch } from '@mui/material';
 import Transition from '@/components/Transition';
 import AnimateTitle from '@/components/AnimateTitle';
+
+import { useWallet } from "@solana/wallet-adapter-react";
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -60,22 +60,30 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 function Myprofile() {
 
-    const user = useSelector((state: RootState) => state?.user);
+    const { wallet, publicKey,connected } = useWallet();
     const router = useRouter();
-    
+    const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
+    const content = useMemo(() => {
+        if (!wallet || !base58) return null;
+        return base58.slice(0, 6) + '..' + base58.slice(-6);
+    }, [wallet, base58]);
     const logOut = () => {
         router.push("/");
     }
+
     useEffect(() => {
-        console.log(user);
-        if (user.wallet?.sol_address === "") router.push("/");
-    }, [])
+        if(!connected) router.push("/")
+    }, [connected])
+
     return (
         <div className='flex flex-col items-start w-screen'>
-            <Transition/>
-            <div className='p-4 py-5 text-white bg-[#FC7823] w-full'>
-                <AnimateTitle text="Welcome" className=""/>
-                <AnimateTitle text={user.username} className=""/>
+            <Transition />
+            <div className='p-4 py-5 text-white bg-[#FC7823] w-full flex items-center'>
+                <AnimateTitle text="Welcome" className="" />
+                <AnimateTitle text={content?.toString() || ""} className="" />
+                {/* <div className='p-2 w-24 rounded-full bg-black flex items-center justify-center'> */}
+                    <img src={wallet?.adapter.icon} alt='Image Icon Wallet' className='w-16 h-16 bg-white p-2 rounded-full' />
+                {/* </div> */}
             </div>
             <div className='p-4 w-full shadow-xl'>
                 <div className='flex my-6 items-center justify-between'>
@@ -98,7 +106,7 @@ function Myprofile() {
                 <button onClick={() => logOut()} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Log Out</button>
                 <span className='mt-2'>App version 1.0.0</span>
             </div>
-            <NavBar/>
+            <NavBar />
         </div>
     )
 }

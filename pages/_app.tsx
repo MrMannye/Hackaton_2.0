@@ -22,7 +22,7 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <ConnectionProvider endpoint={endpoint}> 
-        <WalletProvider wallets={wallets} autoConnect >
+        <WalletProvider wallets={wallets}>
           <WalletModalProvider>
           <Provider store={store}>
             <Component {...pageProps} />

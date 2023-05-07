@@ -5,13 +5,12 @@ import Link from 'next/link';
 import Image from "next/image"
 
 import AddIcon from '@mui/icons-material/Add';
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
-import { useMirrorWorld } from '@/hooks/useMirrorWorld';
 import { useRouter } from 'next/router';
 import InterestBar from '@/components/InterestBar';
 import Transition from '@/components/Transition';
 import AnimateTitle from '@/components/AnimateTitle';
+
+import { useWallet } from "@solana/wallet-adapter-react";
 
 interface Event {
   Id: number,
@@ -22,12 +21,15 @@ interface Event {
 }
 
 function Mytaks() {
+  const {connected} = useWallet();
   const [tasks, setTasks] = useState<Event[]>([])
   const [loading, setloading] = useState(false);
-  const user_publickey = useSelector((state: RootState) => state.user?.wallet?.sol_address);
   const router = useRouter();
   const colorsBackground = ["from-cyan-300 to-blue-300", "from-indigo-300 to-pink-300", "from-indigo-300 from-cyan-300", "from-blue-400 to-orange-200", "from-purple-400 to-yellow-200", "from-cyan-400 to-blue-400", "from-indigo-400 to-pink-300", "from-indigo-400 from-cyan-400", "from-blue-400 to-orange-200", "from-rose-300 to-yellow-200"]
 
+  useEffect(() => {
+    if(!connected) router.push("/")
+  },[connected])
 
   useEffect(() => {
     fetch("https://proactiveweek-superbrandon2018.b4a.run/events")
@@ -35,7 +37,10 @@ function Mytaks() {
       .then(data => {
         setTasks(data.body)
         setloading(true);
-      });
+        setTasks([{Id: 1, name_evento: "Prueba", organizador: "Miguel Aguilera", descripcion_evento: "Prueba para el funcionamiento de la pagina", fecha_evento: new Date()}])
+      }).catch(e => {
+        setTasks([{Id: 1, name_evento: "Prueba", organizador: "Miguel Aguilera", descripcion_evento: "Prueba para el funcionamiento de la pagina", fecha_evento: new Date()}])
+      })
   }, [])
 
 
@@ -54,7 +59,7 @@ function Mytaks() {
       <div className='p-3'>
         <main className='flex w-full flex-col items-start mb-24 space-y-4'>
           {loading ?
-            (tasks.map((task, index) => {
+            (tasks?.map((task, index) => {
               return (
                 <Link key={task?.Id} href={`/task/${task?.Id}`} className='w-full'>
                   <div className={`p-4 bg-gradient-to-r ${selectColor()} bg-o shadow-xl w-full border rounded-xl text-black`}>

@@ -1,12 +1,17 @@
-import { RootState } from '@/store/store'
+import { useWallet } from '@solana/wallet-adapter-react';
 import { NextRequest, NextResponse } from 'next/server'
-import { useSelector } from 'react-redux'
 
-export function middleware(request: NextRequest) {
+export function middleware(req: NextRequest) {
 
-    // const user_publickey = useSelector((state: RootState) => state.user?.wallet?.sol_address);
+    const { wallet } = useWallet();
 
-    if (request.nextUrl.pathname.startsWith('/end')) {
-        return NextResponse.redirect("http://localhost:3000")
+    if(req.nextUrl.pathname !== '/') {
+        if(!wallet) return NextResponse.redirect(new URL("/", req.url))
     }
+
+    return NextResponse.next()
+}
+
+export const config = {
+    matcher: ["/hola"],
 }

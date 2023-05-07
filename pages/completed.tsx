@@ -7,6 +7,9 @@ import { useMirrorWorld } from '@/hooks/useMirrorWorld';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import InterestBar from '@/components/InterestBar';
+import AnimateTitle from '@/components/AnimateTitle';
+import Transition from '@/components/Transition';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 interface Event {
   Id: number,
@@ -18,21 +21,22 @@ interface Event {
 
 function Completed() {
 
-  const user = useSelector((state: RootState) => state?.user);
+  const { wallet, publicKey,connected } = useWallet();
   const router = useRouter();
   const colorsBackground = ["from-cyan-300 to-blue-300", "from-indigo-300 to-pink-300", "from-indigo-300 from-cyan-300", "from-blue-400 to-orange-200", "from-purple-400 to-yellow-200", "from-cyan-400 to-blue-400", "from-indigo-400 to-pink-300", "from-indigo-400 from-cyan-400", "from-blue-400 to-orange-200", "from-rose-300 to-yellow-200"]
 
   const [tasks, setTasks] = useState<Event[]>([])
-  const user_publickey = useSelector((state: RootState) => state.user?.wallet?.sol_address);
   
   useEffect(() => {
-    if (user === undefined) router.push("/");
-  },[])
+    if(!connected) router.push("/")
+}, [connected])
   
   useEffect(() => {
-    fetch("https://proactive-node.herokuapp.com/completedTasks/" + user_publickey)
+    fetch("https://proactive-node.herokuapp.com/completedTasks/" + "1")
       .then(response => response.json())
-      .then(data => setTasks(data));
+      .then(data => setTasks(data)).catch(e => {
+        console.log("Pensaste, de que coño va este pavo?")
+      }) 
   }, [])
 
   const selectColor = (): string => {
@@ -43,11 +47,13 @@ function Completed() {
 
   return (
     <div className='h-screen relative w-screen'>
-      <h1 className=' text-4xl p-4 py-5 text-white font-bold bg-[#FC7823]'>Completed Tasks</h1>
+      <Transition/>
+      <h1 className='text-4xl p-4 py-5 text-white font-bold bg-[#FC7823]'>
+        <AnimateTitle text='My Completed' className=''/>
+      </h1>
       <div className='p-3'>
-        <h2>Completed Tasks</h2>
         <main className='flex w-full flex-col items-start mb-24 space-y-4'>
-        {tasks.map((task, index) => {
+        {tasks?.map((task, index) => {
           return (
             <Link key={task?.Id} href={`/eventos/${task?.Id}`} className='w-full'>
                   <div className={`p-4 bg-gradient-to-r ${selectColor()} bg-o shadow-xl w-full border rounded-xl text-black`}>
