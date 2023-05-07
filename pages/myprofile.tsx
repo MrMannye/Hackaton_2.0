@@ -62,14 +62,11 @@ function Myprofile() {
 
     const { wallet, publicKey,connected } = useWallet();
     const router = useRouter();
-    const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
-    const content = useMemo(() => {
-        if (!wallet || !base58) return null;
-        return base58.slice(0, 6) + '..' + base58.slice(-6);
-    }, [wallet, base58]);
-    const logOut = () => {
-        router.push("/");
-    }
+    // const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
+    // const content = useMemo(() => {
+    //     if (!wallet || !base58) return null;
+    //     return base58.slice(0, 6) + '..' + base58.slice(-6);
+    // }, [wallet, base58]);
 
     useEffect(() => {
         if(!connected) router.push("/")
@@ -80,7 +77,7 @@ function Myprofile() {
             <Transition />
             <div className='p-4 py-5 text-white bg-[#FC7823] w-full flex items-center'>
                 <AnimateTitle text="Welcome" className="" />
-                <AnimateTitle text={content?.toString() || ""} className="" />
+                <AnimateTitle text={"Miguel"} className="" />
                 {/* <div className='p-2 w-24 rounded-full bg-black flex items-center justify-center'> */}
                     <img src={wallet?.adapter.icon} alt='Image Icon Wallet' className='w-16 h-16 bg-white p-2 rounded-full' />
                 {/* </div> */}
@@ -103,7 +100,7 @@ function Myprofile() {
                 </div>
             </div>
             <div className='w-full mt-24 flex flex-col items-center justify-center'>
-                <button onClick={() => logOut()} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Log Out</button>
+                <button className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Log Out</button>
                 <span className='mt-2'>App version 1.0.0</span>
             </div>
             <NavBar />
