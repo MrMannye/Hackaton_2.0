@@ -8,15 +8,19 @@ import EditIcon from '@mui/icons-material/Edit';
 import PersonIcon from '@mui/icons-material/Person';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { useMirrorWorld } from '@/hooks/useMirrorWorld';
+import Transition from '@/components/Transition';
+import UseTransferSol from '@/hooks/useTransferSol';
+import { userState } from '@/features/user/userSlice';
 
 function AddTask() {
 
-    const { user } = useMirrorWorld()
+    const user = useSelector((state: RootState) => state?.user);
     const router = useRouter();
 
     useEffect(() => {
-        if (user === undefined) router.push("/");
+        console.log(user)
+        if (user.sol_address === "") router.push("/");
+        UseTransferSol(user);
     }, [])
 
     const user_publickey = useSelector((state: RootState) => state?.user.wallet?.sol_address);
@@ -45,6 +49,7 @@ function AddTask() {
 
     return (
         <div className='p-6'>
+            <Transition/>
             <div className='flex justify-between'>
                 <ArrowBackIcon className='text-gray-500' onClick={() => router.back()} />
                 <EditIcon className='text-gray-500' />

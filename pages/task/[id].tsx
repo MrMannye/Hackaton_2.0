@@ -8,26 +8,25 @@ import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
 import axios from 'axios';
 
-interface Tasks {
-    friend_publickey: string,
-    task_date: Date,
-    task_desc: string,
-    task_name: string,
-    task_state: number,
-    user_publickey: string,
-  }
+interface Event {
+  Id: number,
+  name_evento: string,
+  organizador: string,
+  descripcion_evento: string,
+  fecha_evento: Date,
+}
 
 export default function Task() {
   
     const router = useRouter();
     const task_name = router.query.id;
-    const [task, setTask] = useState<Tasks>()
+    const [task, setTask] = useState<Event>()
     const user_publickey = useSelector((state: RootState) => state?.user.wallet?.sol_address)
 
     useEffect(() => {
-        fetch("https://proactive-node.herokuapp.com/tasks/"+user_publickey+"/"+task_name)
+        fetch("https://proactiveweek-superbrandon2018.b4a.run/events/" + task_name)
           .then(response => response.json())
-          .then(data => setTask(data[0]));
+          .then(data => setTask(data.body[0]));
       },[])
     
       const completeTask = () => {
@@ -47,13 +46,13 @@ export default function Task() {
             <EditIcon className='text-gray-500'/>
         </div>
         <div className='my-6'>
-            <h1 className='text-4xl mb-2 font-bold'>{task_name}</h1>
-            <span>{task?.task_desc}</span>
+            <h1 className='text-4xl mb-2 font-bold'>{task?.name_evento}</h1>
+            <span>{task?.descripcion_evento}</span>
         </div>
         <Divider variant="middle" />
         <div className='flex flex-col'>
-            <h2>{task?.task_date.toString()}</h2>
-            <span className='text-2xl mb-2 font-bold'>{task?.user_publickey?.slice(0,10)}... <span className='text-[#42BEA5]'>{[task_name]}</span></span>
+            <h2>{new Date(task?.fecha_evento).toLocaleDateString('es-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}</h2>
+            <span className='text-2xl mb-2 font-bold'>{task?.organizador?.slice(0,10)}... <span className='text-[#42BEA5]'>{[task_name]}</span></span>
             <button onClick={() => completeTask()} className='py-4 w-80 shadow-xl self-center bg-[#FC7823] rounded-lg text-white font-semibold mt-5'>Mark As Complete</button>
         </div>
     </div>

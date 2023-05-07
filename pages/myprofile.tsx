@@ -7,6 +7,8 @@ import Link from 'next/link';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { FormControlLabel, styled, Switch } from '@mui/material';
+import Transition from '@/components/Transition';
+import AnimateTitle from '@/components/AnimateTitle';
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -70,9 +72,10 @@ function Myprofile() {
     }, [])
     return (
         <div className='flex flex-col items-start w-screen'>
+            <Transition/>
             <div className='p-4 py-5 text-white bg-[#FC7823] w-full'>
-                <h1 className='text-4xl font-bold'>Welcome</h1>
-                <span className='text-lg'>{user.username}</span>
+                <AnimateTitle text="Welcome" className=""/>
+                <AnimateTitle text={user.username} className=""/>
             </div>
             <div className='p-4 w-full shadow-xl'>
                 <div className='flex my-6 items-center justify-between'>

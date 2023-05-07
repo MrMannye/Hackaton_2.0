@@ -12,7 +12,7 @@ function NavBar() {
     const router = useRouter().pathname;
     
     return (
-    <div className='h-[80px] w-screen absolute bottom-0 flex items-center justify-around bg-black'>
+    <div className='h-[80px] w-screen fixed bottom-0 flex items-center justify-around bg-black'>
        
         <title>Proactive Week</title>
         <link rel="icon" href="/favicon.ico" />
