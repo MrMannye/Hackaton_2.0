@@ -51,7 +51,7 @@ export default function Task() {
         </div>
         <Divider variant="middle" />
         <div className='flex flex-col'>
-            <h2>{new Date(task?.fecha_evento).toLocaleDateString('es-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}</h2>
+            <h2>{new Date(task?.fecha_evento || new Date()).toLocaleDateString('es-us', { weekday: "long", year: "numeric", month: "short", day: "numeric" })}</h2>
             <span className='text-2xl mb-2 font-bold'>{task?.organizador?.slice(0,10)}... <span className='text-[#42BEA5]'>{[task_name]}</span></span>
             <button onClick={() => completeTask()} className='py-4 w-80 shadow-xl self-center bg-[#FC7823] rounded-lg text-white font-semibold mt-5'>Mark As Complete</button>
         </div>
