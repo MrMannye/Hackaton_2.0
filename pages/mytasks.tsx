@@ -27,9 +27,9 @@ function Mytaks() {
   const router = useRouter();
   const colorsBackground = ["from-cyan-300 to-blue-300", "from-indigo-300 to-pink-300", "from-indigo-300 from-cyan-300", "from-blue-400 to-orange-200", "from-purple-400 to-yellow-200", "from-cyan-400 to-blue-400", "from-indigo-400 to-pink-300", "from-indigo-400 from-cyan-400", "from-blue-400 to-orange-200", "from-rose-300 to-yellow-200"]
 
-  // useEffect(() => {
-  //   if(!connected) router.push("/")
-  // },[connected])
+  useEffect(() => {
+    if(!connected) router.push("/")
+  },[connected])
 
   useEffect(() => {
     fetch("https://proactiveweek-superbrandon2018.b4a.run/events")

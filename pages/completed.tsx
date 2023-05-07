@@ -24,9 +24,9 @@ function Completed() {
 
   const [tasks, setTasks] = useState<Event[]>([])
   
-//   useEffect(() => {
-//     if(!connected) router.push("/")
-// }, [connected])
+  useEffect(() => {
+    if(!connected) router.push("/")
+}, [connected])
   
   useEffect(() => {
     fetch("https://proactive-node.herokuapp.com/completedTasks/" + "1")
