@@ -79,7 +79,7 @@ function Myprofile() {
                 <AnimateTitle text="Welcome" className="" />
                 <AnimateTitle text={"Miguel"} className="" />
                 {/* <div className='p-2 w-24 rounded-full bg-black flex items-center justify-center'> */}
-                    <img src={wallet?.adapter.icon} alt='Image Icon Wallet' className='w-16 h-16 bg-white p-2 rounded-full' />
+                    {/* <img src={wallet?.adapter.icon} alt='Image Icon Wallet' className='w-16 h-16 bg-white p-2 rounded-full' /> */}
                 {/* </div> */}
             </div>
             <div className='p-4 w-full shadow-xl'>
