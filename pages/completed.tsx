@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react'
 
 import { useSelector } from 'react-redux';
 import { RootState } from '@/store/store';
-import { useMirrorWorld } from '@/hooks/useMirrorWorld';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import InterestBar from '@/components/InterestBar';

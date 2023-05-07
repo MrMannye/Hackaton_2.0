@@ -3,7 +3,7 @@ import type { RootState } from '../store/store'
 import { useSelector } from 'react-redux';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import QrCodeIcon from '@mui/icons-material/QrCode';
-import { ClusterEnvironment, IUser, MirrorWorld } from "@mirrorworld/web3.js"
+
 
 import  {useRouter}  from 'next/router';
 import { Divider, FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput } from '@mui/material';
@@ -19,21 +19,7 @@ function AddFrensAddress() {
 
     const recipientAddress = "7icXZr9isqt63QNmotLmSmvaq1iHM6YNswRos8ATwTQh"
     const amount = 1000000000 // Amount * Decimals
-    const mirrorWorld = new MirrorWorld({
-        apiKey: "mw_EQhbJbLVBaIwuQiXjemZhmIAJGqgFnWRIkI",
-        env: ClusterEnvironment.testnet,
-    })
-
-    async function transfer(){
-        console.log("Transfer")
-        const transactionResult = await mirrorWorld.transferSOL({
-            recipientAddress,
-            amount,
-        })
-        console.log(transactionResult)
-        
-        return transactionResult;
-    }
+    
 
     return (
         <div className='p-6 shadow-xl'>
@@ -65,8 +51,8 @@ function AddFrensAddress() {
                         label="Solana Wallet Address"
                     />
                 </FormControl>
-                <button onClick={save} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Update Address</button>
-                <button onClick={transfer} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Transfer</button>
+                <button  className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Update Address</button>
+                <button  className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Transfer</button>
             </div>
 
         </div>
