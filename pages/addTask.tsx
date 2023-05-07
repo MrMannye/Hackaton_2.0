@@ -14,7 +14,7 @@ import { userState } from '@/features/user/userSlice';
 
 function AddTask() {
 
-    const user = useSelector((state: RootState) => state?.user);
+    const user:userState = useSelector((state: RootState) => state?.user);
     const router = useRouter();
 
     useEffect(() => {

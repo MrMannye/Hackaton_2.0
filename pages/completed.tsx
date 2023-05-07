@@ -1,8 +1,6 @@
 import NavBar from '@/components/NavBar'
 import React, { useEffect, useState } from 'react'
 
-import { useSelector } from 'react-redux';
-import { RootState } from '@/store/store';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import InterestBar from '@/components/InterestBar';
@@ -20,7 +18,7 @@ interface Event {
 
 function Completed() {
 
-  const { wallet, publicKey,connected } = useWallet();
+  const { connected } = useWallet();
   const router = useRouter();
   const colorsBackground = ["from-cyan-300 to-blue-300", "from-indigo-300 to-pink-300", "from-indigo-300 from-cyan-300", "from-blue-400 to-orange-200", "from-purple-400 to-yellow-200", "from-cyan-400 to-blue-400", "from-indigo-400 to-pink-300", "from-indigo-400 from-cyan-400", "from-blue-400 to-orange-200", "from-rose-300 to-yellow-200"]
 

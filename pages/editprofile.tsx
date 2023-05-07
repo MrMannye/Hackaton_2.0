@@ -12,7 +12,7 @@ import { Divider, FormControl, IconButton, InputAdornment, InputLabel, OutlinedI
 
 function Editprofile() {
 
-    const user = useSelector((state: RootState) => state?.user);
+    const user:any = useSelector((state: RootState) => state?.user);
     const router = useRouter();
     useEffect(() => {
         if (user === undefined) router.push("/");
