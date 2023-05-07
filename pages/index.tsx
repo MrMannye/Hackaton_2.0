@@ -13,9 +13,9 @@ export default function Home() {
   const Login = async () => {
     console.log("Hola")
   }
-  useEffect(() => {
-    if(connected) router.push("/mytasks")
-  }, [connected])
+  // useEffect(() => {
+  //   if(connected) router.push("/mytasks")
+  // }, [connected])
   
 
   return (

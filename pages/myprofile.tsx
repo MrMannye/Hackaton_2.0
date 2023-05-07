@@ -68,9 +68,9 @@ function Myprofile() {
     //     return base58.slice(0, 6) + '..' + base58.slice(-6);
     // }, [wallet, base58]);
 
-    useEffect(() => {
-        if(!connected) router.push("/")
-    }, [connected])
+    // useEffect(() => {
+    //     if(!connected) router.push("/")
+    // }, [connected])
 
     return (
         <div className='flex flex-col items-start w-screen'>
