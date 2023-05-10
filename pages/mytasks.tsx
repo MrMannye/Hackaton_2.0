@@ -11,6 +11,7 @@ import Transition from '@/components/Transition';
 import AnimateTitle from '@/components/AnimateTitle';
 
 import { useWallet } from "@solana/wallet-adapter-react";
+import DialogAddTask from '@/components/DialogAddTask';
 
 interface Event {
   Id: number,
@@ -24,6 +25,7 @@ function Mytaks() {
   const {connected} = useWallet();
   const [tasks, setTasks] = useState<Event[]>([])
   const [loading, setloading] = useState(false);
+  const [open, setOpen] = useState<boolean>(false);
   const router = useRouter();
   const colorsBackground = ["from-cyan-300 to-blue-300", "from-indigo-300 to-pink-300", "from-indigo-300 from-cyan-300", "from-blue-400 to-orange-200", "from-purple-400 to-yellow-200", "from-cyan-400 to-blue-400", "from-indigo-400 to-pink-300", "from-indigo-400 from-cyan-400", "from-blue-400 to-orange-200", "from-rose-300 to-yellow-200"]
 
@@ -37,7 +39,6 @@ function Mytaks() {
       .then(data => {
         setTasks(data.body)
         setloading(true);
-        setTasks([{Id: 1, name_evento: "Prueba", organizador: "Miguel Aguilera", descripcion_evento: "Prueba para el funcionamiento de la pagina", fecha_evento: new Date()}])
       }).catch(e => {
         setTasks([{Id: 1, name_evento: "Prueba", organizador: "Miguel Aguilera", descripcion_evento: "Prueba para el funcionamiento de la pagina", fecha_evento: new Date()}])
       })
@@ -88,11 +89,12 @@ function Mytaks() {
           }
         </main>
       </div>
-      <Link href={"/"} className='fixed right-6 bottom-28'>
-        <Fab className='bg-[#FC7823]' size='large'>
+      <div className='fixed right-6 bottom-28'>
+        <Fab className='bg-[#FC7823]' size='large' onClick={() => setOpen(true)}>
           <AddIcon className='text-white' />
         </Fab>
-      </Link>
+      </div>
+      <DialogAddTask onOpen={open} setOpen={setOpen}/>
       <NavBar />
     </div>
   )
