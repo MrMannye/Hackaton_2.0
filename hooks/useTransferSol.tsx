@@ -16,6 +16,7 @@ export default async function UseTransferSol() {
     const newFriendTransfer = new PublicKey(friendTransfer);
     // SI ES FIN DE SEMANA, ES DECIR, SABADO
     if(new Date().getDay() === 6){
+
         const lamports = await connection.getMinimumBalanceForRentExemption(0);
 
         const transaction = new Transaction().add(

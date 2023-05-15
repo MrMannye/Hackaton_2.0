@@ -4,13 +4,21 @@ import NavBar from '@/components/NavBar';
 import Link from 'next/link';
 
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import { FormControlLabel, styled, Switch } from '@mui/material';
+import { CircularProgress, FormControlLabel, LinearProgress, Snackbar, styled, Switch } from '@mui/material';
+import MuiAlert, { AlertProps } from '@mui/material/Alert';
 import Transition from '@/components/Transition';
 import AnimateTitle from '@/components/AnimateTitle';
 
-import { useWallet } from "@solana/wallet-adapter-react";
-import { PublicKey } from '@solana/web3.js';
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 import DialogFriendTransfer from '@/components/DialogFriendTransfer';
+
+
+const Alert = React.forwardRef<HTMLDivElement, AlertProps>(function Alert(
+    props,
+    ref,
+) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 const MaterialUISwitch = styled(Switch)(({ theme }) => ({
@@ -62,8 +70,13 @@ const MaterialUISwitch = styled(Switch)(({ theme }) => ({
 
 function Myprofile() {
 
-  const [open, setOpen] = useState<boolean>(false);
+    const [open, setOpen] = useState<boolean>(false);
+    const [tasks, setTasks] = useState<number>()
+    const [completed, setCompleted] = useState<number>()
+    const [copied, setCopied] = useState<boolean>(false)
     const { wallet, publicKey, connected } = useWallet();
+    const { connection } = useConnection();
+
     const router = useRouter();
     const base58 = useMemo(() => publicKey?.toBase58(), [publicKey]);
     const content = useMemo(() => {
@@ -73,29 +86,66 @@ function Myprofile() {
     const logOut = () => {
         router.push("/");
     }
+    const handleClick = () => {
+        navigator.clipboard.writeText(base58!)
+        setCopied(true);
+    };
+    const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setCopied(false);
+    };
     useEffect(() => {
         if (!connected) router.push("/")
-        console.log(base58)
+        fetch(`https://proactiveweek-superbrandon2018.b4a.run/tasks/mytasks/${base58}`)
+            .then(response => response.json())
+            .then(data => {
+                setTasks(data.body.length)
+            }).catch(e => {
+                setTasks(0)
+            })
+        fetch(`https://proactiveweek-superbrandon2018.b4a.run/tasks/myCompletedTasks/${base58}`)
+            .then(response => response.json())
+            .then(data => setCompleted(data.body.length))
+            .catch(e => {
+                console.log("Pensaste, de que coño va este pavo?")
+            })
     }, [connected])
 
     return (
         <div className='flex flex-col items-start w-screen'>
             <Transition />
-            <div className='p-4 py-5 text-white bg-[#FC7823] w-full flex items-center'>
+            <div onClick={() => handleClick()} className='p-4 py-5 text-white bg-[#FC7823] w-full flex items-center'>
                 <AnimateTitle text="Welcome" className="" />
                 <AnimateTitle text={content?.toString() || ""} className="" />
                 <img src={wallet?.adapter.icon} alt='Image Icon Wallet' className='w-16 h-16 bg-white p-2 rounded-full' />
             </div>
-            <div className='p-4 w-full shadow-xl'>
-                <div className='flex my-6 items-center justify-between'>
+            <div className='p-4 w-full'>
+                <div className='flex items-center w-full space-x-4'>
+                    <div className='flex flex-col border-sky-100 p-4 shadow-xl space-y-3 items-center justify-center'>
+                        <CircularProgress variant="determinate" className='text-orange-400' value={tasks! * 20} />
+                        <h3 className='text-lg text-center font-medium'>Tareas incompletas</h3>
+                    </div>
+                    <div className='flex flex-col border-sky-100 shadow-xl p-4 space-y-3 items-center justify-center'>
+                        <CircularProgress variant="determinate" value={completed! * 20} />
+                        <h3 className='text-lg text-center font-medium'>Tareas completadas</h3>
+                    </div>
+                </div>
+                <div className='w-full shadow-xl p-4 mt-5 mb-10'>
+                    <h3 className=' tracking-wider font-semibold my-2'>TERMINO DE SEMANA</h3>
+                    <LinearProgress variant="determinate" value={(new Date().getDay() + 6)*10} />
+                    <span className='flex justify-end'>Faltan {new Date().getDay() + 6} dias</span>
+                </div>
+                <div className='flex my-6 px-4 items-center justify-between'>
                     <Link href={"/editprofile"}>See my profile</Link>
                     <ArrowForwardIosIcon />
                 </div>
-                <div className='flex my-6 items-center justify-between'>
+                <div className='flex my-6 px-4 items-center justify-between'>
                     <div onClick={() => setOpen(true)}>Add Fren Address</div>
                     <ArrowForwardIosIcon />
                 </div>
-                <div className='flex mt-6 mb-3 items-center justify-between'>
+                <div className='flex mt-6 px-4 mb-3 items-center justify-between'>
                     <span>Switch to Dark Mode</span>
                     <FormControlLabel
                         control={<MaterialUISwitch defaultChecked />}
@@ -103,11 +153,16 @@ function Myprofile() {
                     />
                 </div>
             </div>
-            <div className='w-full mt-24 flex flex-col items-center justify-center'>
+            <div className='w-full mt-10 flex flex-col items-center justify-center'>
                 <button onClick={() => logOut()} className='shadow-xl font-semibold text-lg rounded-lg py-5 px-12'>Log Out</button>
                 <span className='mt-2'>App version 1.0.0</span>
             </div>
-            <DialogFriendTransfer onOpen={open} setOpen={setOpen}/>
+            <Snackbar open={copied} autoHideDuration={3000} onClose={handleClose}>
+                <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Address copied to your clipboard
+                </Alert>
+            </Snackbar>
+            <DialogFriendTransfer myaddress={base58} onOpen={open} setOpen={setOpen} />
             <NavBar />
         </div>
     )
